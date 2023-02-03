@@ -1,35 +1,69 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #define TRUE 1
 #define FALSE 0
 
+unsigned int SIZE;
+char * KEY;
+
+FILE * INPUT_FILE;
+FILE * OUTPUT_FILE;
+
 int encrypt();
 char * adress();
+int keyGenerator();
 
 int main(int argc, char ** argv) {
-    FILE * input_file = fopen(argv[1], "r");
-    FILE * output_file;
+    INPUT_FILE = fopen(argv[1], "r");
 
-    int size;
-    char * key;
+    int user_choice;
 
-    if (input_file) {
-        printf("ESCOLHA O TAMANHO DA SUA CHAVE: ");
-        scanf("%d", &size); key = malloc(size * sizeof(char));
-        printf("INSIRA SUA CHAVE: ");
-        scanf("%s", key);
+    if (INPUT_FILE) {
+        printf("-----------------------------------------------\n");
+        printf("------------------ CRIPT.COM ------------------\n");
+        printf("-----------------------------------------------\n");
+        printf("[1] - CRIPTOGRAFAR ARQUIVO\n");
+        printf("[2] - DESCRIPTOGRAFAR ARQUIVO\n");
+        printf("[3] - SAIR\n");
+        printf("~ Opção escolhida: ");
+        scanf("%d", &user_choice);
 
-        if (!key) {
-            output_file = fopen(adress(), "w");
-
+        switch (user_choice) {
+            case 1:
+                if (keyGenerator()) {
+                    printf("! - CHAVE CRIADA COM SUCESSO.\n");
+                } else {
+                    printf("! - NÃO FOI POSSÍVEL CRIAR A CHAVE DE ACESSO.\n");
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
         }
     } else {
-        printf("ARQUIVO NÃO ENCONTRADO.\n");
+        printf("! - ARQUIVO NÃO ENCONTRADO.\n");
     }
 
     return EXIT_SUCCESS;
+}
+
+int keyGenerator() {
+        system("clear"); // windows: "cls"
+        printf("ESCOLHA O TAMANHO DA CHAVE DE ACESSO: ");
+        scanf("%d", &SIZE); 
+
+        KEY = malloc(SIZE * sizeof(char));
+
+        printf("INSIRA SUA CHAVE: ");
+        scanf("%s", KEY);
+
+        if (SIZE != strlen(KEY)) return FALSE;
+        return TRUE;
 }
 
 char * adress() {
@@ -49,8 +83,4 @@ char * adress() {
     sprintf(adress_name, "arquivos_gerados/%02d-%02d-%d#%02d:%02d#encrypt.txt", day, month, year, hours, minutes);
 
     return adress_name;
-}
-
-int encrypt() {
-
 }
