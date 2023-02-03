@@ -121,5 +121,12 @@ void encrypt() {
 }
 
 void decrypt() {
-    
+    int i = 0;
+    int cript_value;
+    while (!feof(INPUT_FILE)) {
+        fscanf(INPUT_FILE, "%d#", &cript_value);
+        fprintf(OUTPUT_FILE, "%c", cript_value / KEY[i]);
+        if (i < SIZE) i = 0;
+        else i++;
+    }
 }
