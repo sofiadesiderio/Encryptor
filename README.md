@@ -26,7 +26,7 @@ O programa tem uma CLI (<em>Command Line Interface</em>) simples, que permite vo
 
 -> texto de exemplo: "caneta"
 
-O algoritmo vai ler caractere por caractere do texto, e converter ele para o valor correspondente na tabela ASCII.
+O algoritmo vai ler caractere por caractere do texto, e converte ele para o valor correspondente na tabela ASCII.
 
 -> texto de exemplo: "c" - "a" - "n" - "e" - "t" - "a"
 
