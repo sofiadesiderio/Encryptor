@@ -1,4 +1,4 @@
-### CRIPT.COM
+### 👾 CRIPT.COM
 
 Esté é uma pequeno <em>script</em>, feito em C, que visa criptografar e descriptografar arquivos .txt com chave simétrica personalizada.
 
