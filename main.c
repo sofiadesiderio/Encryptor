@@ -6,6 +6,9 @@
 #define TRUE 1
 #define FALSE 0
 
+#define ENCRYPT 2
+#define DECRYPT 4
+
 unsigned int SIZE;
 char * KEY;
 
@@ -13,7 +16,8 @@ FILE * INPUT_FILE;
 FILE * OUTPUT_FILE;
 
 void encrypt();
-char * adress();
+void decrypt();
+char * adress(int type);
 int keyGenerator();
 
 int main(int argc, char ** argv) {
@@ -35,8 +39,7 @@ int main(int argc, char ** argv) {
             case 1:
                 if (keyGenerator()) {
                     printf("! - CHAVE CRIADA COM SUCESSO.\n");
-
-                    OUTPUT_FILE = fopen(adress(), "w");
+                    OUTPUT_FILE = fopen(adress(ENCRYPT), "w");
                     if (OUTPUT_FILE) {
                         encrypt();
                     } else {
@@ -47,6 +50,16 @@ int main(int argc, char ** argv) {
                 }
                 break;
             case 2:
+                if (keyGenerator()) {
+                    OUTPUT_FILE = fopen(adress(DECRYPT), "w");
+                    if (OUTPUT_FILE) {
+                        decrypt();
+                    } else {
+                        printf("! - NÃO FOI POSSÍVEL CRIAR O ARQUIVO DE SAÍDA.\n");
+                    }
+                } else {
+                    printf("! - CHAVE DE ACESSO INVÁLIDA.\n");
+                }
                 break;
             case 3:
                 break;
@@ -61,7 +74,7 @@ int main(int argc, char ** argv) {
 
 int keyGenerator() {
     system("clear"); // windows: "cls"
-    printf("ESCOLHA O TAMANHO DA CHAVE DE ACESSO: ");
+    printf("TAMANHO DA CHAVE DE ACESSO: ");
     scanf("%d", &SIZE); 
 
     KEY = malloc(SIZE * sizeof(char));
@@ -73,7 +86,7 @@ int keyGenerator() {
     return TRUE;
 }
 
-char * adress() {
+char * adress(int type) {
     int day, month, year, hours, minutes;
     time_t now; time(&now);
 
@@ -87,7 +100,12 @@ char * adress() {
     minutes = local -> tm_min;
 
     char * adress_name = malloc(54 * sizeof(char));
-    sprintf(adress_name, "arquivos_gerados/%02d-%02d-%d#%02d:%02d#encrypt.txt", day, month, year, hours, minutes);
+
+    sprintf (
+        adress_name, 
+        (type == ENCRYPT) ? "arquivos_criptografados/%02d-%02d-%d#%02d:%02d#encrypt.txt" : "arquivos_descriptografados/%02d-%02d-%d#%02d:%02d#decrypt.txt",
+        day, month, year, hours, minutes
+    );
 
     return adress_name;
 }
@@ -100,4 +118,8 @@ void encrypt() {
         if (i < SIZE) i = 0;
         else i++;
     }
+}
+
+void decrypt() {
+    
 }
