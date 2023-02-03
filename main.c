@@ -64,6 +64,7 @@ int main(int argc, char ** argv) {
             case 3:
                 break;
             default:
+                printf("! - OPÇÃO INVÁLIDA.\n");
         }
     } else {
         printf("! - ARQUIVO NÃO ENCONTRADO.\n");
