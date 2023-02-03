@@ -12,7 +12,7 @@ char * KEY;
 FILE * INPUT_FILE;
 FILE * OUTPUT_FILE;
 
-int encrypt();
+void encrypt();
 char * adress();
 int keyGenerator();
 
@@ -35,6 +35,13 @@ int main(int argc, char ** argv) {
             case 1:
                 if (keyGenerator()) {
                     printf("! - CHAVE CRIADA COM SUCESSO.\n");
+
+                    OUTPUT_FILE = fopen(adress(), "w");
+                    if (OUTPUT_FILE) {
+                        encrypt();
+                    } else {
+                        printf("! - NÃO FOI POSSÍVEL CRIAR O ARQUIVO DE SAÍDA.\n");
+                    }
                 } else {
                     printf("! - NÃO FOI POSSÍVEL CRIAR A CHAVE DE ACESSO.\n");
                 }
@@ -53,17 +60,17 @@ int main(int argc, char ** argv) {
 }
 
 int keyGenerator() {
-        system("clear"); // windows: "cls"
-        printf("ESCOLHA O TAMANHO DA CHAVE DE ACESSO: ");
-        scanf("%d", &SIZE); 
+    system("clear"); // windows: "cls"
+    printf("ESCOLHA O TAMANHO DA CHAVE DE ACESSO: ");
+    scanf("%d", &SIZE); 
 
-        KEY = malloc(SIZE * sizeof(char));
+    KEY = malloc(SIZE * sizeof(char));
 
-        printf("INSIRA SUA CHAVE: ");
-        scanf("%s", KEY);
+    printf("INSIRA SUA CHAVE: ");
+    scanf("%s", KEY);
 
-        if (SIZE != strlen(KEY)) return FALSE;
-        return TRUE;
+    if (SIZE != strlen(KEY)) return FALSE;
+    return TRUE;
 }
 
 char * adress() {
@@ -83,4 +90,14 @@ char * adress() {
     sprintf(adress_name, "arquivos_gerados/%02d-%02d-%d#%02d:%02d#encrypt.txt", day, month, year, hours, minutes);
 
     return adress_name;
+}
+
+void encrypt() {
+    int i = 0;
+    while (!feof(INPUT_FILE)) {
+        int character = fgetc(INPUT_FILE);
+        fprintf(OUTPUT_FILE, "%d#", character * (int) KEY[i]);
+        if (i < SIZE) i = 0;
+        else i++;
+    }
 }
