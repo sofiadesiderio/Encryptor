@@ -20,7 +20,7 @@ O programa tem uma CLI (<em>Command Line Interface</em>) simples, que permite vo
 
 #### e as pastas?
 
-É importante que você não altere o nome das pastas, ou o caminho delas. O código inteiro foi pensado com elas da forma que está aí. Nesse sentido, se for mudar algo, encarregue-se de fazer as devidas alterações na função <em>adress()</em>.
+É importante que você não altere o nome das pastas, ou o caminho delas. O código inteiro foi pensado com elas da forma que está aí. Nesse sentido, se for mudar algo, encarregue-se de fazer as devidas alterações na função <em>directory()</em>.
 
 #### lógica da encriptação com um exemplo o_o
 
