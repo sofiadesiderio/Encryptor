@@ -14,7 +14,7 @@ char * KEY;
 FILE * INPUT_FILE;
 FILE * OUTPUT_FILE;
 
-char * adress(int type);
+char * directory(int type);
 int keyGenerator();
 void encrypt();
 void decrypt();
@@ -35,7 +35,7 @@ int main(int argc, char ** argv) {
             case 1:
                 if (keyGenerator()) {
                     printf("! - CHAVE CRIADA COM SUCESSO.\n");
-                    OUTPUT_FILE = fopen(adress(ENCRYPT), "w");
+                    OUTPUT_FILE = fopen(directory(ENCRYPT), "w");
                     if (OUTPUT_FILE) {
                         encrypt();
                     } else {
@@ -47,7 +47,7 @@ int main(int argc, char ** argv) {
             case 2:
                 if (keyGenerator()) {
                     printf("! - CHAVE ACEITA.\n");
-                    OUTPUT_FILE = fopen(adress(DECRYPT), "w");
+                    OUTPUT_FILE = fopen(directory(DECRYPT), "w");
                     if (OUTPUT_FILE) {
                         decrypt();
                     } else {
@@ -55,8 +55,7 @@ int main(int argc, char ** argv) {
                     }
                 } else {
                     printf("! - CHAVE DE ACESSO INVÁLIDA.\n");
-                }
-                break;
+                } break;
             case 3:
                 break;
             default:
@@ -84,8 +83,8 @@ int keyGenerator() {
     return TRUE;
 }
 
-char * adress(int type) {
-    char * adress_name = malloc(100 * sizeof(char));
+char * directory(int type) {
+    char * directory_name = malloc(100 * sizeof(char));
     int day, month, year, hours, minutes;
     time_t now; time(&now);
     struct tm * local = localtime(&now);
@@ -95,11 +94,11 @@ char * adress(int type) {
     hours = local -> tm_hour;
     minutes = local -> tm_min;
     sprintf (
-        adress_name, 
+        directory_name, 
         (type == ENCRYPT) ? "arquivos_criptografados/%02d-%02d-%d#%02d:%02d#encrypt.txt" : "arquivos_descriptografados/%02d-%02d-%d#%02d:%02d#decrypt.txt",
         day, month, year, hours, minutes
     );
-    return adress_name;
+    return directory_name;
 }
 
 void encrypt() {
